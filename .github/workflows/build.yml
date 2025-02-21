@@ -29,13 +29,10 @@ jobs:
       - name: Login into Github Docker Registery
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Login into Docker Hub
-        run: echo "${{ secrets.DOCKER_HUB_PAT }}" | docker login -u shyim --password-stdin
-
-      - name: Get latest Adminerevo version
-        id: ADMINEREVO_VERSION
+      - name: Get latest AdminerNeo version
+        id: ADMINERNEO_VERSION
         run: |
-          VERSION=$(curl https://api.github.com/repos/adminerevo/adminerevo/releases/latest | jq '.tag_name | ltrimstr("v")' -r)
+          VERSION=$(curl https://api.github.com/repos/adminerneo/adminerneo/releases/latest | jq '.tag_name | ltrimstr("v")' -r)
           echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
 
       - name: Build and push
@@ -43,10 +40,8 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/shyim/adminerevo:latest
-            ghcr.io/shyim/adminerevo:${{ steps.ADMINEREVO_VERSION.outputs.VERSION }}
-            shyim/adminerevo:latest
-            shyim/adminerevo:${{ steps.ADMINEREVO_VERSION.outputs.VERSION }}
+            ghcr.io/tomas-kulhanek/adminerneo-docker:latest
+            ghcr.io/tomas-kulhanek/adminerneo-docker:${{ steps.ADMINERNEO_VERSION.outputs.VERSION }}
           platforms: linux/amd64,linux/arm64
           build-args: |
-            ADMINEREVO_VERSION=${{ steps.ADMINEREVO_VERSION.outputs.VERSION }}
+            ADMINERNEO_VERSION=${{ steps.ADMINERNEO_VERSION.outputs.VERSION }}
