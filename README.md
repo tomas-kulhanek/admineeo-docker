@@ -11,7 +11,7 @@ AdminerNeo is a fork of Adminer, but it's better maintained and has more feature
 ### Standalone
 
 ```console
-$ docker run --link some_database:db -p 8080:8080 ghcr.io/tomas-kulhanek/adminerneo:latest
+$ docker run --link some_database:db -p 8080:8080 ghcr.io/tomas-kulhanek/adminerneo-docker:latest
 ```
 
 Then you can hit `http://localhost:8080` or `http://host-ip:8080` in your browser.
@@ -25,7 +25,7 @@ Example `docker-compose.yml` for `adminerneo`:
 
 services:
   adminer:
-    image: ghcr.io/tomas-kulhanek/adminerneo:latest
+    image: ghcr.io/tomas-kulhanek/adminerneo-docker:latest
     restart: always
     ports:
       - 8080:8080
@@ -43,13 +43,13 @@ This image bundles all official AdminerNeo plugins. You can find the list of plu
 To load plugins you can pass a list of filenames in `ADMINER_PLUGINS`:
 
 ```console
-$ docker run --link some_database:db -p 8080:8080 -e ADMINER_PLUGINS='tables-filter tinymce' ghcr.io/tomas-kulhanek/adminerneo:latest
+$ docker run --link some_database:db -p 8080:8080 -e ADMINER_PLUGINS='tables-filter tinymce' ghcr.io/tomas-kulhanek/adminerneo-docker:latest
 ```
 
 If a plugin *requires* parameters to work correctly instead of adding the plugin to `ADMINER_PLUGINS`, you need to add a custom file to the container:
 
 ```console
-$ docker run --link some_database:db -p 8080:8080 -e ADMINER_PLUGINS='login-servers' ghcr.io/tomas-kulahnek/adminerneo:latest
+$ docker run --link some_database:db -p 8080:8080 -e ADMINER_PLUGINS='login-servers' ghcr.io/tomas-kulahnek/adminerneo-docker:latest
 Unable to load plugin file "login-servers", because it has required parameters: servers
 Create a file "/var/www/html/plugins-custom/login-servers.php" with the following contents to load the plugin:
 
@@ -75,7 +75,7 @@ The image bundles all the designs that are available in the Adminer source packa
 To use a bundled design you can pass its name in `ADMINER_DESIGN`:
 
 ```console
-$ docker run --link some_database:db -p 8080:8080 -e ADMINER_DESIGN='nette' ghcr.io/tomas-kulhanek/adminerneo:latest
+$ docker run --link some_database:db -p 8080:8080 -e ADMINER_DESIGN='nette' ghcr.io/tomas-kulhanek/adminerneo-docker:latest
 ```
 
 To use a custom design you can add a file called `/var/www/html/adminer.css`.
@@ -85,7 +85,7 @@ To use a custom design you can add a file called `/var/www/html/adminer.css`.
 You can specify the default host with the `ADMINER_DEFAULT_SERVER` environment variable. This is useful if you are connecting to an external server or a docker container named something other than the default `db`.
 
 ```console
-docker run -p 8080:8080 -e ADMINER_DEFAULT_SERVER=mysql ghcr.io/tomas-kulhanek/adminerneo:latest
+docker run -p 8080:8080 -e ADMINER_DEFAULT_SERVER=mysql ghcr.io/tomas-kulhanek/adminerneo-docker:latest
 ```
 
 ### Setting default login credentials
